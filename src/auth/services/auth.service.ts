@@ -3,6 +3,8 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../../user/services/user.service';
 import { User } from '../../user/entities/user.entity';
+import { UserToLoginDto } from '../dtos/user-to-login.dto';
+import { REFRESH_TOKEN_EXPIRE_TIME } from '../../commun/constants/constants';
 
 @Injectable()
 export class AuthService {
@@ -11,14 +13,13 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
   async validateUser(userName: string, password: string) {
-    const user = await this.userService.findOneByName(userName);
+    const user = await this.userService.findByUsername(userName);
     if (user && (await bcrypt.compare(password, user.password))) {
-      const { password, ...result } = user;
-      return result;
+      return UserToLoginDto.map(user);
     }
     return null;
   }
-  async login(user: User) {
+  async login(user: UserToLoginDto) {
     const payload = {
       username: user.email,
       sub: {
@@ -29,7 +30,9 @@ export class AuthService {
     return {
       ...user,
       accessToken: this.jwtService.sign(payload),
-      refreshToken: this.jwtService.sign(payload, { expiresIn: '7d' }),
+      refreshToken: this.jwtService.sign(payload, {
+        expiresIn: REFRESH_TOKEN_EXPIRE_TIME,
+      }),
     };
   }
 

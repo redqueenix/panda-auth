@@ -8,7 +8,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { JwtRefreshStrategy } from './strategies/jwt-refresh.strategy';
 import { UserService } from '../user/services/user.service';
 import { User } from '../user/entities/user.entity';
-import { JWT_SECRET } from '../commun/constants/constants';
+import { JWT_SECRET, TOKEN_EXPIRE_TIME } from '../commun/constants/constants';
 
 @Module({
   providers: [
@@ -23,7 +23,7 @@ import { JWT_SECRET } from '../commun/constants/constants';
   imports: [
     JwtModule.register({
       secret: JWT_SECRET,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: TOKEN_EXPIRE_TIME },
     }),
     TypeOrmModule.forFeature([User]),
   ],

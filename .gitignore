@@ -5,6 +5,7 @@
 *.iml
 node_modules/
 data/
+dist/
 
 # TypeScript
 *.js
@@ -12,4 +13,3 @@ data/
 *.d.ts
 
 package-lock.json
-dist/

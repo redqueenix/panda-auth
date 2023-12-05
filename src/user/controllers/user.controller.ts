@@ -33,6 +33,10 @@ export class UserController {
     status: 201,
     description: 'User successfully created',
   })
+  @ApiResponse({
+    status: 409,
+    description: 'User already exists',
+  })
   create(@Body() createUser: CreateUserDto) {
     return this.userService.create(createUser);
   }

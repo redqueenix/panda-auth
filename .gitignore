@@ -1,0 +1,12 @@
+.idea
+.project
+.classpath
+.settings/
+*.iml
+node_modules/
+data/
+
+# TypeScript
+*.js
+*.js.map
+*.d.ts

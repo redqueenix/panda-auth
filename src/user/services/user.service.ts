@@ -22,6 +22,10 @@ export class UserService {
     throw new NotFoundException('No user found with the id : ' + id);
   }
 
+  async findAll(): Promise<User[]> {
+    return await this.userRepo.find();
+  }
+
   async findByUsername(userName: string) {
     return await this.userRepo.findOne({ where: { email: userName } });
   }

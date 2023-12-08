@@ -23,8 +23,22 @@ export class UserController {
     status: 200,
     description: 'User successfully retrieved',
   })
+  @ApiResponse({
+    status: 404,
+    description: 'No user found with the id : {ID}',
+  })
   find(@Param('id') id: number) {
     return this.userService.find(id);
+  }
+
+  @Get()
+  @UseGuards(JwtAuthGuard)
+  @ApiResponse({
+    status: 200,
+    description: 'Users successfully retrieved',
+  })
+  findAll() {
+    return this.userService.findAll();
   }
 
   @Post()

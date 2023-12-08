@@ -21,6 +21,9 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
+  // Suite au blocage d’une requête multiorigines (Cross-Origin Request) : la politique « Same Origin »)
+  app.enableCors();
+
   await app.listen(APP_PORT);
 }
 bootstrap();
